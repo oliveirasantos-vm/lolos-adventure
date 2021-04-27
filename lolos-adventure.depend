@@ -1,5 +1,12 @@
 # depslib dependency file v1.0
-1619496054 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
+1619548254 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<raylib.h>
+	"windows.c"
+
+1619555120 /home/vitor/CodeBlocks/lolos-adventure/windows.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
