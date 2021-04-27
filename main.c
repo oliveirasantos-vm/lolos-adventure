@@ -37,7 +37,7 @@ int main(){
             case 3:
                 window = player(window, pixantiqua);
                 break;
-            case 4;
+            case 4:
                 window = game(window, pixantiqua);
                 break;
             default:
