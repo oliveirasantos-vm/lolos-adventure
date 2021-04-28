@@ -40,6 +40,9 @@ int main(){
             case 4:
                 window = game(window, pixantiqua);
                 break;
+            case 5:
+                window = removeSave(window, pixantiqua);
+                break;
             default:
                 CloseWindow();
                 break;

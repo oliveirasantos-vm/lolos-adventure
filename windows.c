@@ -94,18 +94,102 @@ int credits(int window, Font font){
 
 int loadGame(int window, Font font){
     const char *back = "VOLTAR";
-    Vector2 backPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, back, 20, 12).x/2, SCREEN_HEIGTH/2.0f - 10 + 150.0f};
+    Vector2 backPosition = {70, 380};
     Rectangle backBox = {backPosition.x, backPosition.y, MeasureTextEx(font, back, 20, 12).x, 20};
+
+    const char *remove = "REMOVER";
+    Vector2 removePosition = {410, 380};
+    Rectangle removeBox = {removePosition.x, removePosition.y, MeasureTextEx(font, remove, 20, 12).x, 20};
+
+    Rectangle newGameBox = {70, 50, 500, 50};
+
+    Rectangle loadBox = {70, 120, 500, 80};
 
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
+        DrawRectangleRoundedLines(newGameBox, 0.2, 0, 3, WHITE);
+        DrawTextEx(font, "NEW GAME", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "NEW GAME", 20, 12).x/2, 65}, 20, 12, WHITE);
+
+
+        if(CheckCollisionPointRec(GetMousePosition(), newGameBox)){
+            DrawRectangleRoundedLines(newGameBox, 0.2, 0, 3, GRAY);
+            DrawTextEx(font, "NEW GAME", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "NEW GAME", 20, 12).x/2, 65}, 20, 12, GRAY);
+            SetMouseCursor(4);
+        }
+
+        DrawRectangleRoundedLines(loadBox, 0.2, 0, 3, WHITE);
+        DrawTextEx(font, "PLAYER", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "PLAYER", 20, 12).x/2, 130}, 20, 12, WHITE);
+        DrawTextEx(font, "PONTOS:0", (Vector2){80, 170}, 14, 12, WHITE);
+        DrawTextEx(font, "FASE:0", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "FASE:0", 14, 12).x/2, 170}, 14, 12, WHITE);
+        DrawTextEx(font, "VIDAS:0", (Vector2){500 - MeasureTextEx(font, "VIDAS:0", 14, 12).x/2, 170}, 14, 12, WHITE);
+
+
+        if(CheckCollisionPointRec(GetMousePosition(), loadBox)){
+            DrawRectangleRoundedLines(loadBox, 0.2, 0, 3, GRAY);
+            DrawTextEx(font, "PLAYER", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "PLAYER", 20, 12).x/2, 130}, 20, 12, GRAY);
+            DrawTextEx(font, "PONTOS:0", (Vector2){80, 170}, 14, 12, GRAY);
+            DrawTextEx(font, "FASE:0", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "FASE:0", 14, 12).x/2, 170}, 14, 12, GRAY);
+            DrawTextEx(font, "VIDAS:0", (Vector2){500 - MeasureTextEx(font, "VIDAS:0", 14, 12).x/2, 170}, 14, 12, GRAY);
+            SetMouseCursor(4);
+        }
+
         DrawTextEx(font, back, backPosition, 20, 12, WHITE);
         if(CheckCollisionPointRec(GetMousePosition(), backBox)){
             DrawTextEx(font, back, backPosition, 20, 12, GRAY);
             SetMouseCursor(4);
             if(IsMouseButtonPressed(0)){
                 window = 0;
+            }
+        }
+
+        DrawTextEx(font, remove, removePosition, 20, 12, WHITE);
+        if(CheckCollisionPointRec(GetMousePosition(), removeBox)){
+            DrawTextEx(font, remove, removePosition, 20, 12, GRAY);
+            SetMouseCursor(4);
+            if(IsMouseButtonPressed(0)){
+                window = 5;
+            }
+        }
+    EndDrawing();
+    return window;
+}
+
+int removeSave(int window, Font font){
+
+
+    const char *cancel = "CANCELAR";
+    Vector2 cancelPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, cancel, 20, 12).x/2, SCREEN_HEIGTH/2.0f - 10 + 150.0f};
+    Rectangle cancelBox = {cancelPosition.x, cancelPosition.y, MeasureTextEx(font, cancel, 20, 12).x, 20};
+
+    Rectangle loadBox = {70, 50, 500, 80};
+
+    BeginDrawing();
+        ClearBackground(BLACK);
+        SetMouseCursor(1);
+
+        DrawRectangleRoundedLines(loadBox, 0.2, 0, 3, WHITE);
+        DrawTextEx(font, "PLAYER", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "PLAYER", 20, 12).x/2, 60}, 20, 12, WHITE);
+        DrawTextEx(font, "PONTOS:0", (Vector2){80, 100}, 14, 12, WHITE);
+        DrawTextEx(font, "FASE:0", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "FASE:0", 14, 12).x/2, 100}, 14, 12, WHITE);
+        DrawTextEx(font, "VIDAS:0", (Vector2){500 - MeasureTextEx(font, "VIDAS:0", 14, 12).x/2, 100}, 14, 12, WHITE);
+
+
+        if(CheckCollisionPointRec(GetMousePosition(), loadBox)){
+            DrawRectangleRoundedLines(loadBox, 0.2, 0, 3, RED);
+            DrawTextEx(font, "PLAYER", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "PLAYER", 20, 12).x/2, 60}, 20, 12, RED);
+            DrawTextEx(font, "PONTOS:0", (Vector2){80, 100}, 14, 12, RED);
+            DrawTextEx(font, "FASE:0", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "FASE:0", 14, 12).x/2,100} , 14, 12, RED);
+            DrawTextEx(font, "VIDAS:0", (Vector2){500 - MeasureTextEx(font, "VIDAS:0", 14, 12).x/2, 100}, 14, 12, RED);
+            SetMouseCursor(4);
+        }
+
+        DrawTextEx(font, cancel, cancelPosition, 20, 12, WHITE);
+        if(CheckCollisionPointRec(GetMousePosition(), cancelBox)){
+            DrawTextEx(font, cancel, cancelPosition, 20, 12, GRAY);
+            SetMouseCursor(4);
+            if(IsMouseButtonPressed(0)){
+                window = 2;
             }
         }
     EndDrawing();
