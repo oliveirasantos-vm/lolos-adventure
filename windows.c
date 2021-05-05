@@ -3,14 +3,10 @@
 #include <string.h>
 #include <raylib.h>
 
+
 #define MAX_INPUT_CHARS 10
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGTH 480
-
-char name[MAX_INPUT_CHARS + 1] = "\0";
-int letterCount = 0, framesCounter = 0;
-bool mouseOnText = false;
-
 
 int menu(int window, Font font){
     const char *titulo[2] = {"AVENTURAS DE","LOLO"};
@@ -28,6 +24,7 @@ int menu(int window, Font font){
                                    SCREEN_HEIGTH/2.0f - 10 + 120.0f},
                                   {SCREEN_WIDTH/2.0f - MeasureTextEx(font, opcoes[3], 20, 12).x/2,
                                    SCREEN_HEIGTH/2.0f - 10 + 150.0f}};
+
     Rectangle opcoesBox[4] = {{opcoesPositions[0].x, opcoesPositions[0].y, MeasureTextEx(font, opcoes[0], 20, 12).x,20},
                               {opcoesPositions[1].x, opcoesPositions[1].y, MeasureTextEx(font, opcoes[1], 20, 12).x,20},
                               {opcoesPositions[2].x, opcoesPositions[2].y, MeasureTextEx(font, opcoes[2], 20, 12).x,20},
@@ -68,13 +65,14 @@ int menu(int window, Font font){
     return window;
 }
 
+
+
 int credits(int window, Font font){
     const char *creditos = "MATHEUS BECK\n\nVITOR SANTOS\n\n";
     Vector2 creditosPositions = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, creditos, 25, 12).x/2, SCREEN_HEIGTH/2.0f - 10 - 80.0f};
     const char *back = "VOLTAR";
     Vector2 backPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, back, 20, 12).x/2, SCREEN_HEIGTH/2.0f - 10 + 150.0f};
     Rectangle backBox = {backPosition.x, backPosition.y, MeasureTextEx(font, back, 20, 12).x, 20};
-
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
@@ -92,6 +90,8 @@ int credits(int window, Font font){
     return window;
 }
 
+
+
 int loadGame(int window, Font font){
     const char *back = "VOLTAR";
     Vector2 backPosition = {70, 380};
@@ -104,7 +104,6 @@ int loadGame(int window, Font font){
     Rectangle newGameBox = {70, 50, 500, 50};
 
     Rectangle loadBox = {70, 120, 500, 80};
-
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
@@ -116,6 +115,9 @@ int loadGame(int window, Font font){
             DrawRectangleRoundedLines(newGameBox, 0.2, 0, 3, GRAY);
             DrawTextEx(font, "NEW GAME", (Vector2){SCREEN_WIDTH/2.0f - MeasureTextEx(font, "NEW GAME", 20, 12).x/2, 65}, 20, 12, GRAY);
             SetMouseCursor(4);
+            if(IsMouseButtonPressed(0)){
+                window = 3;
+            }
         }
 
         DrawRectangleRoundedLines(loadBox, 0.2, 0, 3, WHITE);
@@ -155,15 +157,14 @@ int loadGame(int window, Font font){
     return window;
 }
 
+
+
 int removeSave(int window, Font font){
-
-
     const char *cancel = "CANCELAR";
     Vector2 cancelPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, cancel, 20, 12).x/2, SCREEN_HEIGTH/2.0f - 10 + 150.0f};
     Rectangle cancelBox = {cancelPosition.x, cancelPosition.y, MeasureTextEx(font, cancel, 20, 12).x, 20};
 
     Rectangle loadBox = {70, 50, 500, 80};
-
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
@@ -196,6 +197,10 @@ int removeSave(int window, Font font){
     return window;
 }
 
+
+
+
+
 int player(int window, Font font){
     const char *play = "JOGAR";
     Vector2 playPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, play, 20, 12).x/2, SCREEN_HEIGTH/2.0f - 10 + 150.0f};
@@ -205,6 +210,9 @@ int player(int window, Font font){
     Vector2 labelUserPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, labelUser, 25, 12).x/2, SCREEN_HEIGTH/2.0f - 10 - 100.0f};
 
     Rectangle textBox = { SCREEN_WIDTH/2 - 150, 180, 300, 50};
+    char name[MAX_INPUT_CHARS + 1] = "\0";
+    int letterCount = 0, framesCounter = 0;
+    bool mouseOnText = false;
 
     int key = GetCharPressed();
 

@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <raylib.h>
+
 #include "windows.c"
 #include "game.c"
 
-#define MAX_INPUT_CHARS 8
+#define MAX_INPUT_CHARS 10
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGTH 480
 
@@ -18,30 +19,32 @@ typedef struct GRAVACAO {
 } Gravacao, * pGravacao;
 
 int main(){
-    int window = 0;
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGTH, "Lolo's Adventure");
-    Font pixantiqua = LoadFont("resources/fonts/pixantiqua.png");
+
+    Font font = LoadFont("resources/fonts/pixantiqua.png");
+    int window = 0;
+
     SetTargetFPS(60);
 
     while(!WindowShouldClose()){
         switch(window){
             case 0:
-                window = menu(window, pixantiqua);
+                window = menu(window, font);
                 break;
             case 1:
-                window = credits(window, pixantiqua);
+                window = credits(window, font);
                 break;
             case 2:
-                window = loadGame(window, pixantiqua);
+                window = loadGame(window, font);
                 break;
             case 3:
-                window = player(window, pixantiqua);
+                window = player(window, font);
                 break;
             case 4:
-                window = game(window, pixantiqua);
+                window = game(window, font);
                 break;
             case 5:
-                window = removeSave(window, pixantiqua);
+                window = removeSave(window, font);
                 break;
             default:
                 CloseWindow();
