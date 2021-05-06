@@ -199,7 +199,10 @@ int removeSave(int window, Font font){
 
 
 
-
+Rectangle textBox = { SCREEN_WIDTH/2 - 150, 180, 300, 50};
+char name[MAX_INPUT_CHARS + 1] = "\0";
+int letterCount = 0, framesCounter = 0;
+bool mouseOnText = false;
 
 int player(int window, Font font){
     const char *play = "JOGAR";
@@ -209,12 +212,12 @@ int player(int window, Font font){
     const char *labelUser = "PLAYER:";
     Vector2 labelUserPosition = {SCREEN_WIDTH/2.0f - MeasureTextEx(font, labelUser, 25, 12).x/2, SCREEN_HEIGTH/2.0f - 10 - 100.0f};
 
-    Rectangle textBox = { SCREEN_WIDTH/2 - 150, 180, 300, 50};
-    char name[MAX_INPUT_CHARS + 1] = "\0";
-    int letterCount = 0, framesCounter = 0;
-    bool mouseOnText = false;
+
 
     int key = GetCharPressed();
+
+    if(CheckCollisionPointRec(GetMousePosition(), textBox)) mouseOnText = true;
+    else mouseOnText = false;
 
     while (key > 0)
     {
@@ -239,7 +242,9 @@ int player(int window, Font font){
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
+
         DrawTextEx(font, labelUser, labelUserPosition, 25, 12, WHITE);
+
         DrawRectangleRec(textBox, LIGHTGRAY);
         if (mouseOnText) DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, WHITE);
         else DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, BLACK);
@@ -247,6 +252,7 @@ int player(int window, Font font){
         if (letterCount < MAX_INPUT_CHARS){
             if (((framesCounter/20)%2) == 0) DrawTextEx(font, "_", (Vector2){textBox.x + 16 + MeasureTextEx(font, name, 30, 12).x, textBox.y + 5}, 40, 12, BLACK);
         }
+
         DrawTextEx(font, play, playPosition, 20, 12, WHITE);
         if(CheckCollisionPointRec(GetMousePosition(), playBox)){
             DrawTextEx(font, play, playPosition, 20, 12, GRAY);

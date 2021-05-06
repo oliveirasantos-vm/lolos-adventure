@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1620169835 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
+1620249550 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,13 +7,13 @@
 	"windows.c"
 	"game.c"
 
-1620169800 /home/vitor/CodeBlocks/lolos-adventure/windows.c
+1620273557 /home/vitor/CodeBlocks/lolos-adventure/windows.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<raylib.h>
 
-1620173485 /home/vitor/CodeBlocks/lolos-adventure/game.c
+1620277347 /home/vitor/CodeBlocks/lolos-adventure/game.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

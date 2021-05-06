@@ -7,91 +7,270 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGTH 480
 
-char map[14][13] = {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
-                    {'|','W','W','W','W','W','W','D','W','W','W','W','|'},
-                    {'|','R','R','R','R','R','R','.','R','R','T','T','|'},
-                    {'|','R','T','T','R','H','.','.','R','R','T','T','|'},
-                    {'|','.','T','T','R','R','R','.','R','R','R','T','|'},
-                    {'|','.','.','T','T','R','R','.','R','R','R','T','|'},
-                    {'|','L','.','.','.','R','R','.','R','R','T','H','|'},
-                    {'|','.','.','.','.','.','.','S','.','R','.','.','|'},
-                    {'|','.','T','T','.','.','.','.','.','.','.','.','|'},
-                    {'|','T','T','T','T','.','.','.','T','T','.','.','|'},
-                    {'|','T','T','T','T','.','.','.','T','T','T','.','|'},
-                    {'|','R','T','T','R','K','.','.','.','T','T','.','|'},
-                    {'|','R','R','R','R','R','R','.','.','.','.','.','|'},
-                    {'3','-','-','-','-','-','-','-','-','-','-','-','4'}};
+#define floorPattern LoadTexture("resources/floorpattern.png")
+#define door
+#define wall
+#define wallside
+#define wallcorner1
+#define wallcorner2
+#define wallcorner3
+#define wallcorner4
+#define wallinternal
+#define rock
+#define chestclose
+#define chestopen
+#define tree
+#define hearthblock
+#define emeraldframer
+#define snakey
+#define lolo
 
-#define floorPattern LoadTexture("resources/floorpattern.png");
 
+char map[10][14][13] = {{{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','D','W','W','W','W','|'},
+                         {'|','R','R','R','R','R','R','.','R','R','T','T','|'},
+                         {'|','R','T','T','R','H','.','.','R','R','T','T','|'},
+                         {'|','.','T','T','R','R','R','.','R','R','R','T','|'},
+                         {'|','.','.','T','T','R','R','.','R','R','R','T','|'},
+                         {'|','L','.','.','.','R','R','.','R','R','T','H','|'},
+                         {'|','.','.','.','.','.','.','S','.','R','.','.','|'},
+                         {'|','.','T','T','.','.','.','.','.','.','.','.','|'},
+                         {'|','T','T','T','T','.','.','.','T','T','.','.','|'},
+                         {'|','T','T','T','T','.','.','.','T','T','T','.','|'},
+                         {'|','R','T','T','R','K','.','.','.','T','T','.','|'},
+                         {'|','R','R','R','R','R','R','.','.','.','.','.','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','D','W','W','|'},
+                         {'|','.','.','.','S','.','R','R','R','.','.','.','|'},
+                         {'|','.','H','.','.','.','R','R','R','.','H','.','|'},
+                         {'|','.','.','.','.','.','.','T','T','.','.','.','|'},
+                         {'|','O','O','O','O','E','O','O','O','O','E','O','|'},
+                         {'|','O','O','O','O','E','O','O','O','O','E','O','|'},
+                         {'|','K','.','T','T','.','.','.','.','.','.','O','|'},
+                         {'|','.','.','T','T','.','.','.','T','T','.','O','|'},
+                         {'|','.','.','.','.','.','R','R','T','T','.','O','|'},
+                         {'|','S','.','.','.','.','R','R','H','.','.','O','|'},
+                         {'|','.','.','.','.','.','.','.','K','.','.','.','|'},
+                         {'|','H','.','.','.','L','.','O','O','O','O','O','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-int game(int window, Font font){
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','D','W','W','W','W','W','|'},
+                         {'|','.','.','.','B','.','.','.','.','.','.','.','|'},
+                         {'|','.','R','R','R','R','R','R','C','.','.','.','|'},
+                         {'|','.','.','C','.','.','.','.','.','.','R','.','|'},
+                         {'|','.','.','.','.','.','.','R','R','R','R','.','|'},
+                         {'|','H','O','O','O','O','.','R','H','.','C','.','|'},
+                         {'|','E','O','O','O','K','.','R','H','B','C','.','|'},
+                         {'|','H','O','O','O','O','.','R','H','.','C','.','|'},
+                         {'|','.','.','.','.','.','.','R','R','R','R','.','|'},
+                         {'|','.','.','.','C','.','.','.','.','.','R','.','|'},
+                         {'|','.','R','R','R','R','R','R','C','.','.','.','|'},
+                         {'|','.','.','.','B','.','L','.','.','.','.','.','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-    SetTextureFilter(floorPattern, TEXTURE_FILTER_TRILINEAR);
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','W','W','W','|'},
+                         {'|','R','R','R','R','.','.','.','C','.','.','R','|'},
+                         {'|','R','H','.','C','.','.','.','R','H','R','R','|'},
+                         {'|','R','R','.','R','.','.','.','R','R','R','R','|'},
+                         {'|','.','.','.','.','.','.','.','.','R','R','R','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','.','.','.','.','K','.','.','.','.','.','|'},
+                         {'|','.','.','.','.','F','.','F','.','.','.','.','|'},
+                         {'|','R','C','R','.','.','.','.','.','.','.','.','|'},
+                         {'|','R','.','R','R','.','.','.','R','R','C','R','|'},
+                         {'|','.','.','.','C','.','E','.','R','H','.','R','|'},
+                         {'|','R','H','R','R','.','L','.','R','R','.','R','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-    const Rectangle floorRec = {112, 16, 416, 448};
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','D','W','W','|'},
+                         {'|','R','.','.','.','H','K','H','.','.','.','R','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','.','T','.','.','.','.','.','T','.','.','|'},
+                         {'|','H','.','.','.','.','A','.','.','.','.','H','|'},
+                         {'|','H','.','R','.','.','.','.','.','R','.','H','|'},
+                         {'|','.','.','C','.','.','.','.','.','C','.','.','|'},
+                         {'|','.','T','T','.','.','.','.','.','T','T','.','|'},
+                         {'|','.','T','T','.','.','.','.','.','T','T','.','|'},
+                         {'|','.','.','R','.','.','.','.','.','R','.','.','|'},
+                         {'|','.','.','R','C','.','.','.','C','R','.','.','|'},
+                         {'|','T','.','.','.','.','L','.','.','.','.','T','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-const Texture2D door = LoadTexture("resources/objects/door.png");
-const Texture2D wall = LoadTexture("resources/objects/wall.png");
-const Texture2D wallside = LoadTexture("resources/objects/wallside.png");
-const Texture2D wallcorner1 = LoadTexture("resources/objects/wallcorner1.png");
-const Texture2D wallcorner2 = LoadTexture("resources/objects/wallcorner2.png");
-const Texture2D wallcorner3 = LoadTexture("resources/objects/wallcorner3.png");
-const Texture2D wallcorner4 = LoadTexture("resources/objects/wallcorner4.png");
-const Texture2D wallinternal = LoadTexture("resources/objects/wallinternal.png");
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','D','W','W','|'},
+                         {'|','R','R','R','R','R','R','R','R','.','R','R','|'},
+                         {'|','R','R','.','H','T','K','T','H','.','R','R','|'},
+                         {'|','T','.','.','.','.','.','.','.','.','.','T','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','.','P','.','.','H','.','.','P','.','.','|'},
+                         {'|','.','.','.','C','.','.','.','C','.','.','.','|'},
+                         {'|','.','.','T','.','C','.','C','.','T','.','.','|'},
+                         {'|','H','.','.','.','.','.','.','.','.','.','H','|'},
+                         {'|','T','H','.','.','.','.','.','.','.','H','T','|'},
+                         {'|','R','R','.','.','.','.','.','.','.','R','R','|'},
+                         {'|','.','.','.','R','.','.','L','R','R','R','R','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-const Texture2D rock = LoadTexture("resources/objects/rock.png");
-const Texture2D chestclose = LoadTexture("resources/objects/chest-close.png");
-const Texture2D chestopen = LoadTexture("resources/objects/chest-open.png");
-const Texture2D tree = LoadTexture("resources/objects/tree.png");
-const Texture2D hearthblock = LoadTexture("resources/objects/hearthblock.png");
-const Texture2D emeraldframer = LoadTexture("resources/objects/emeraldframer.png");
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','W','D','W','|'},
+                         {'|','O','O','O','O','O','O','O','O','O','E','O','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','H','R','.','.','.','.','.','R','H','.','|'},
+                         {'|','.','R','.','.','.','.','.','.','R','.','.','|'},
+                         {'|','.','R','H','.','.','.','M','.','H','R','.','|'},
+                         {'|','.','R','R','.','.','.','.','.','R','R','.','|'},
+                         {'|','.','H','R','.','T','.','T','.','R','R','.','|'},
+                         {'|','.','.','.','.','R','R','R','.','.','.','.','|'},
+                         {'|','.','.','T','.','C','K','C','.','T','.','.','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','.','.','.','.','L','.','.','.','.','.','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
 
-const Texture2D snakey = LoadTexture("resources/characters/snakey.png");
-const Texture2D lolo = LoadTexture("resources/characters/lolo.png");
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','D','W','W','W','W','W','|'},
+                         {'|','.','F','.','.','.','.','.','.','.','.','T','|'},
+                         {'|','.','R','.','.','R','.','H','R','.','.','.','|'},
+                         {'|','.','T','.','R','R','R','R','R','.','.','.','|'},
+                         {'|','.','H','.','.','R','H','R','R','H','.','H','|'},
+                         {'|','.','T','.','.','R','R','R','T','T','.','T','|'},
+                         {'|','.','.','.','.','K','R','H','T','.','.','.','|'},
+                         {'|','.','.','T','.','.','.','S','R','T','.','T','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','H','|'},
+                         {'|','L','.','.','.','.','.','.','.','.','.','R','|'},
+                         {'|','.','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','.','.','.','T','H','T','R','H','R','T','.','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}},
+
+                        {{'1','-','-','-','-','-','-','-','-','-','-','-','2'},
+                         {'|','W','W','W','W','W','W','W','W','W','W','W','|'},
+                         {'|','R','R','R','T','A','T','R','R','.','.','.','|'},
+                         {'|','B','.','H','T','B','T','H','.','.','.','.','|'},
+                         {'|','R','.','.','.','.','.','.','.','T','.','.','|'},
+                         {'|','K','.','E','.','.','.','.','.','.','.','L','|'},
+                         {'|','R','.','.','.','S','.','.','.','.','.','.','|'},
+                         {'|','B','.','.','.','.','.','.','.','.','.','.','|'},
+                         {'|','V','V','V','V','V','R','R','R','R','X','R','|'},
+                         {'|','V','V','V','V','V','R','.','.','C','.','T','|'},
+                         {'|','.','.','A','V','V','R','.','.','C','.','T','|'},
+                         {'|','.','.','.','V','V','R','H','.','C','.','H','|'},
+                         {'|','.','.','.','V','V','R','.','.','C','T','T','|'},
+                         {'3','-','-','-','-','-','-','-','-','-','-','-','4'}}};
+
+char livebar[14] = {'L','5','.','S','0','.','O','0','.','P','D','D','D','.'};
+int k = 0, frames = 0;
+
+void move(int vertical, int horizontal, int k){
+    int stop = 1;
+    if(frames%10 == 0){
+        for(int i = 0; i < 14; i++){
+            if(stop){
+                for(int j = 0; j < 13; j++){
+                    if(map[k][i][j] == 'L'  && map[k][i+vertical][j+horizontal] != 'W' && map[k][i+vertical][j+horizontal] != '|' && map[k][i+vertical][j+horizontal] != '-' && map[k][i+vertical][j+horizontal] != 'R' && map[k][i+vertical][j+horizontal] != 'T'){
+                        map[k][i][j] = '.';
+                        map[k][i+vertical][j+horizontal] = 'L';
+                        stop = 0;
+                        break;
+                    }
+                }
+            }else break;
+        }
+    }
+}
+
+int game(int window, Font font, Texture2D *images){
+    frames++;
+    int keyPressed = 0;
 
     BeginDrawing();
         ClearBackground(BLACK);
         SetMouseCursor(1);
-        DrawTextureRec(floorPattern, floorRec, (Vector2){112,16}, RAYWHITE);
+        if(IsKeyDown(KEY_W)){
+            keyPressed++;
+            if(keyPressed == 1)
+                move(-1, 0, k);
+        }
+
+        if(IsKeyDown(KEY_S)){
+            keyPressed++;
+            if(keyPressed == 1)
+                move(1, 0, k);
+        }
+
+        if(IsKeyDown(KEY_D)){
+            keyPressed++;
+            if(keyPressed == 1)
+                move(0, 1, k);
+        }
+
+        if(IsKeyDown(KEY_A)){
+            keyPressed++;
+            if(keyPressed == 1)
+                move(0, -1, k);
+        }
+
+        DrawTextureRec(images[0], (Rectangle){112, 16, 416, 448}, (Vector2){112,16}, RAYWHITE);
+
         for(int i = 0; i < 14; i++){
-            for(int j = 0; j < 13; j++){
-                if(map[i][j] == 'W')
-                    DrawTextureEx(wallinternal, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'D')
-                    DrawTextureEx(door, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'R')
-                    //DrawTexture(Texture2D texture, int posX, int posY, Color tint);
-                    DrawTextureEx(rock, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                    //DrawRectangleRounded((Rectangle){144+j*32,48+i*32,32,32}, 0.4, 0, ORANGE);
-                else if(map[i][j] == 'T')
-                    DrawTextureEx(tree, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'H')
-                    DrawTextureEx(hearthblock, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'S')
-                    DrawTextureEx(snakey, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'K')
-                    DrawTextureEx(chestclose, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == 'L')
-                    DrawTextureEx(lolo, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '-')
-                    DrawTextureEx(wall, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '|')
-                    DrawTextureEx(wallside, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '1')
-                    DrawTextureEx(wallcorner1, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '2')
-                    DrawTextureEx(wallcorner2, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '3')
-                    DrawTextureEx(wallcorner3, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
-                else if(map[i][j] == '4')
-                    DrawTextureEx(wallcorner4, (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+            if(livebar[i] == 'L'){
+                DrawTextureEx(images[8], (Vector2){530,32+i*32}, 0, 0.13, RAYWHITE);
+            } else if(livebar[i] == 'O'){
+                DrawTextureEx(images[16], (Vector2){530,32+i*32}, 0, 0.13, RAYWHITE);
+            } else if(livebar[i] == 'P'){
+                DrawTextureEx(images[17], (Vector2){530,32+i*32}, 0, 0.13, RAYWHITE);
+            } else if(livebar[i] == 'S'){
+                DrawTextureEx(images[19], (Vector2){530,32+i*32}, 0, 0.13, RAYWHITE);
+            } else if(livebar[i] == 'D'){
+                DrawTextureEx(images[18], (Vector2){530,32+i*32}, 0, 0.13, RAYWHITE);
+            } else if(livebar[i] == '5'){
+                DrawTextEx(font, "5", (Vector2){538,32+i*32}, 32, 12, WHITE);
+            } else if(livebar[i] == '0'){
+                DrawTextEx(font, "0", (Vector2){538,32+i*32}, 32, 12, WHITE);
             }
         }
 
-    EndDrawing();
+        for(int i = 0; i < 14; i++){
+            for(int j = 0; j < 13; j++){
+                if(map[k][i][j] == 'W')
+                    DrawTextureEx(images[1], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'D')
+                    DrawTextureEx(images[2], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'R')
+                    DrawTextureEx(images[3], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'T')
+                    DrawTextureEx(images[4], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'H')
+                    DrawTextureEx(images[5], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'S')
+                    DrawTextureEx(images[6], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'K')
+                    DrawTextureEx(images[7], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'L')
+                    DrawTextureEx(images[8], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '-')
+                    DrawTextureEx(images[9], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '|')
+                    DrawTextureEx(images[10], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '1')
+                    DrawTextureEx(images[11], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '2')
+                    DrawTextureEx(images[12], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '3')
+                    DrawTextureEx(images[13], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == '4')
+                    DrawTextureEx(images[14], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+                else if(map[k][i][j] == 'O')
+                    DrawTextureEx(images[15], (Vector2){112+j*32,16+i*32}, 0, 0.13, RAYWHITE);
+            }
+        }
 
+
+        //}
+    EndDrawing();
     return window;
 }
 
