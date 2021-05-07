@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1620249550 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
+1620358859 source:/home/vitor/CodeBlocks/lolos-adventure/main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -13,7 +13,7 @@
 	<string.h>
 	<raylib.h>
 
-1620277347 /home/vitor/CodeBlocks/lolos-adventure/game.c
+1620359643 /home/vitor/CodeBlocks/lolos-adventure/game.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

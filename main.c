@@ -24,7 +24,7 @@ int main(){
     Font font = LoadFont("resources/fonts/pixantiqua.png");
     int window = 0;
 
-    Texture2D images[20] = {LoadTexture("resources/floorpattern.png"),
+    Texture2D images[22] = {LoadTexture("resources/floorpattern.png"),
                             LoadTexture("resources/objects/wallinternal.png"),
                             LoadTexture("resources/objects/door.png"),
                             LoadTexture("resources/objects/rock.png"),
@@ -43,7 +43,9 @@ int main(){
                             LoadTexture("resources/objects/shots.png"),
                             LoadTexture("resources/objects/pw.png"),
                             LoadTexture("resources/objects/square.png"),
-                            LoadTexture("resources/objects/score.png")};
+                            LoadTexture("resources/objects/score.png"),
+                            LoadTexture("resources/save.png"),
+                            LoadTexture("resources/exit.png")};
 
     SetTargetFPS(60);
 
@@ -66,6 +68,9 @@ int main(){
                 break;
             case 5:
                 window = removeSave(window, font);
+                break;
+            case 6:
+                window = gameover(window, font);
                 break;
             default:
                 CloseWindow();
