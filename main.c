@@ -24,7 +24,7 @@ int main(){
     Font font = LoadFont("resources/fonts/pixantiqua.png");
     int window = 0;
 
-    Texture2D images[22] = {LoadTexture("resources/floorpattern.png"),
+    Texture2D images[50] = {LoadTexture("resources/floorpattern.png"),
                             LoadTexture("resources/objects/wallinternal.png"),
                             LoadTexture("resources/objects/door.png"),
                             LoadTexture("resources/objects/rock.png"),
@@ -45,7 +45,30 @@ int main(){
                             LoadTexture("resources/objects/square.png"),
                             LoadTexture("resources/objects/score.png"),
                             LoadTexture("resources/save.png"),
-                            LoadTexture("resources/exit.png")};
+                            LoadTexture("resources/exit.png"),
+                            LoadTexture("resources/objects/chest-open.png"),
+                            LoadTexture("resources/objects/open-door.png"),
+                            LoadTexture("resources/objects/lolo-on-chest.png"),
+                            LoadTexture("resources/objects/lolo-on-open-chest.png"),
+                            LoadTexture("resources/objects/chest-empty.png"),
+                            LoadTexture("resources/objects/ladder.png"),
+                            LoadTexture("resources/objects/emeraldframer.png"),
+                            LoadTexture("resources/characters/gol.png"),
+                            LoadTexture("resources/characters/skull.png"),
+                            LoadTexture("resources/characters/rocky.png"),
+                            LoadTexture("resources/characters/alma.png"),
+                            LoadTexture("resources/characters/donmedusa.png"),
+                            LoadTexture("resources/characters/medusa.png"),
+                            LoadTexture("resources/objects/grass.png"),
+                            LoadTexture("resources/characters/leeper.png"),
+                            LoadTexture("resources/objects/ladder-side.png"),
+                            LoadTexture("resources/objects/arrow-top.png"),
+                            LoadTexture("resources/objects/lolo-on-grass.png"),
+                            LoadTexture("resources/objects/lolo-on-ladder.png"),
+                            LoadTexture("resources/objects/lolo-on-ladder-side.png"),
+                            LoadTexture("resources/objects/explosive-rock.png"),
+                            LoadTexture("resources/objects/hammer.png"),
+                            LoadTexture("resources/objects/lolo-on-arrow-top.png")};
 
     SetTargetFPS(60);
 
